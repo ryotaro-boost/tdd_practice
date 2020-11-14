@@ -12,10 +12,10 @@ class VacancyLevelTest extends TestCase
      * @param string $expectedMark
      * @dataProvider dataMark
      */
-    public function testMark(int $remainingCount, string $expectedSlug)
+    public function testMark(int $remainingCount, string $expectedMark)
     {
         $level = new VacancyLevel($remainingCount);
-        $this->assertSame($expectedSlug, $level->mark());
+        $this->assertSame($expectedMark, $level->mark());
     }
 
     public function dataMark()
