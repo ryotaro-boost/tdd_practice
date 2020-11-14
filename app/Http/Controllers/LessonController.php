@@ -9,10 +9,8 @@ class LessonController extends Controller
 {
     public function show(Lesson $lesson)
     {
-        $vacancyLevel = new VacancyLevel(0);
         return view('lesson.show', [
             'lesson' => $lesson,
-            'vacancyLevel' => $vacancyLevel,
         ]);
     }
 }
