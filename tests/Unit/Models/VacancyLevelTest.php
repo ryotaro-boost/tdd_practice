@@ -12,10 +12,10 @@ class VacancyLevelTest extends TestCase
      * @param string $expectedMark
      * @dataProvider dataMark
      */
-    public function testMark(int $remainingCount, string $expectedMark)
+    public function testMark(int $remainingCount, string $expectedSlug)
     {
         $level = new VacancyLevel($remainingCount);
-        $this->assertSame($expectedMark, $level->mark());
+        $this->assertSame($expectedSlug, $level->mark());
     }
 
     public function dataMark()
@@ -32,6 +32,35 @@ class VacancyLevelTest extends TestCase
             '空き十分' => [
                 'remainingCount' => 5,
                 'expectedMark' => '◎',
+            ],
+        ];
+    }
+
+    /**
+     * @param int $remainingCount
+     * @param string $expectedSlug
+     * @dataProvider dataSlug
+     */
+    public function testSlug(int $remainingCount, string $expectedSlug)
+    {
+        $level = new VacancyLevel($remainingCount);
+        $this->assertSame($expectedSlug, $level->slug());
+    }
+
+    public function dataSlug()
+    {
+        return [
+            '空きなし' => [
+                'remainingCount' => 0,
+                'expectedSlug' => 'empty',
+            ],
+            '残りわずか' => [
+                'remainingCount' => 4,
+                'expectedSlug' => 'few',
+            ],
+            '空き十分' => [
+                'remainingCount' => 5,
+                'expectedSlug' => 'enough',
             ],
         ];
     }
