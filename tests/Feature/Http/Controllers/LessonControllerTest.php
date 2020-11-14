@@ -22,13 +22,13 @@ class LessonControllerTest extends TestCase
         $lesson = factory(Lesson::class)->create(['name' => '楽しいヨガレッスン', 'capacity' => $capacity]);
         for ($i =0;$i<$reservationCount;$i++) {
             $user = factory(User::class)->create();
-            $lesson->reservations()->save(factory(Reservation::class)->make(['user_id' => $user]));
+            $lesson->reservations()->save(factory(Reservation::class)->make(['user_id' => $user->id]));
         }
         $response = $this->get("/lessons/{$lesson->id}");
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeText($lesson->name);
-        $response->assertSeeText('空き状況:{$expectedVacancyLevelMark}');
+        $response->assertSeeText("空き状況:{$expectedVacancyLevelMark}");
     }
 
     public function dataShow()
@@ -37,17 +37,17 @@ class LessonControllerTest extends TestCase
             '空きなし' => [
                 'reservationCount' => 10,
                 'capacity' => 10,
-                '$expectedVacancyLevelMark' => '×',
+                'expectedVacancyLevelMark' => '×',
             ],
             '残りわずか' => [
                 'reservationCount' => 6,
                 'capacity' => 10,
-                '$expectedVacancyLevelMark' => '△',
+                'expectedVacancyLevelMark' => '△',
             ],
             '空き十分' => [
                 'reservationCount' => 1,
                 'capacity' => 10,
-                '$expectedVacancyLevelMark' => '◎',
+                'expectedVacancyLevelMark' => '◎',
             ],
         ];
         
