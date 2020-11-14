@@ -32,4 +32,9 @@ class VacancyLevel extends Model
         }
         return 'enough';
     }
+
+    public function __toString()
+    {
+        return $this->mark();
+    }
 }
